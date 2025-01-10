@@ -21,7 +21,7 @@ from homeassistant.const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-__version__ = "1.2.0"
+__version__ = "2.0.0"
 VERSION = __version__
 
 
