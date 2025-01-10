@@ -66,9 +66,9 @@ class PikoSensor(SensorEntity):
         self._icon = SENSOR_TYPES[self.type][2]
         self.serial_number = info[0]
         self.model = info[1]
-        if self._unit_of_measurement == UnitOfEnergy.KILO_WATT_HOUR:
-            self._attr_device_class = SensorDeviceClass.ENERGY
-            self._attr_state_class = SensorStateClass.TOTAL_INCREASING
+        if self._unit_of_measurement is not None:
+            self._state_class = {"state_class": SENSOR_TYPES[self.type][3],"device_class":SENSOR_TYPES[self.type][4]}
+
 
     @property
     def name(self):
@@ -105,6 +105,13 @@ class PikoSensor(SensorEntity):
             "model": self.model,
         }
 
+###
+    @property
+    def state_attributes(self):
+        """Return device specific state attributes."""
+        if self._unit_of_measurement is not None:
+            return self._state_class
+###
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     async def async_update(self):
